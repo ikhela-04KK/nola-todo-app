@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>capture-with-form</title>
+
+    <link rel="stylesheet" href="scss/custom.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <form
+      class="form-horizontal"
+      role="form"
+      enctype="multipart/form-data"
+      method="POST"
+      action="/about/<%=year%>/<%=month%>"
+    >
+      <div class="form-group">
+        <label for="fieldName" class="col-sm-2 control-label">Name</label>
+
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="fieldName" name="name" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="fieldEmail" class="col-sm-2 control-label">Email</label>
+
+        <div class="col-sm-4">
+          <input
+            type="email"
+            class="form-control"
+            required
+            id="fieldName"
+            name="email"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="fieldPhoto" class="col-sm-2 control-label"
+          >Vacation photo
+        </label>
+
+        <div class="col-sm-4">
+          <input
+            type="file"
+            class="form-control"
+            required
+            accept="images/*"
+            id="fieldPhoto"
+            name="photo"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    <script src="js/bootstrapp.bundle.min.js"></script>
+  </body>
+</html>

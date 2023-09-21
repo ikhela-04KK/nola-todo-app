@@ -1,0 +1,91 @@
+/* the code css for password check */
+
+
+
+.wrapper .pass-field{
+    height: 65px;
+    width: 100%;
+    position: relative;
+}
+
+.pass-field input{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    padding: 0 17px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    border: 1px solid #999;
+}
+
+.pass-field input:focus{
+    padding: 0 16px;
+    border: 2px solid #4285f4;
+}
+.pass-field i {
+    right: 18px;
+    top: 50%;
+    font-size:1.2rem;
+    color: #999;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+
+.wrapper .content {
+    margin: 20px 0 10px;
+}
+.wrapper .content p {
+    color: #333;
+    font-size: 1.2rem;
+}
+.content .requirement-list {
+    margin-top: 20px;
+}
+.requirement-list li{
+    font-size: 1.3rem;
+    list-style:none; 
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.requirement-list li i{
+    width: 20px;
+    color: #aaa;
+    font-size: 0.6rem;
+}
+.requirement-list li.valid i{
+        font-size:1.2rem;
+        color: #4285f4;
+}
+
+.requirement-list li span{
+    margin-left: 12px;
+    color: #333;
+}
+.requirement-list li.valid span{
+    color: #999;
+}
+
+/* initializing of media queries  */
+@media screen and (max-width:500px){ /* ajoute un style spécifique lorsque la largeur est unférieur à 500px*/
+
+    body, .wrapper{
+        padding: 15px;
+    }
+    .wrapper .pass-field{
+        height: 55px;
+    }
+    .pass-field input, .content p{
+        font-size: 1.15rem;
+    }
+    .pass-field i, .requirement-list li{
+        font-size:1.1rem;
+    }
+    .requirement-list li span{
+        margin-left: 7px;
+    }
+}
+
+
+

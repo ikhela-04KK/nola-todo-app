@@ -1,0 +1,17 @@
+
+body{
+    height: 100vh;
+    align-items: center;
+    font-family: "space Grotesk";
+}
+body h1{
+    font-size: 34px !important;
+}
+form{
+    width: 298px;
+    height: 409.6px;
+}
+
+form button{ 
+    font-size: 23px !important;
+}
