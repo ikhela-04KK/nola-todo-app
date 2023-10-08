@@ -14,7 +14,7 @@ type UsersTasks {
 
 model Users {
   id       String       @id @default(auto()) @map("_id") @db.ObjectId
-  email    String       
+  email    String
   image    String
   nom      String
   password String
