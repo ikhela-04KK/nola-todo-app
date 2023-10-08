@@ -1,48 +1,31 @@
 import { PrismaClient} from '@prisma/client';
-
 const prisma = new PrismaClient();
-
-export type UsersWhereUniqueInput = {
-  email: string;
-  image: string;
-  nom: string;
-  password: string;
-  tasks: {
-    singleTask: string;
-    time: Date;
-  }[];
-};
-
 async function main() {
-  try {
+  // try {
     // Données de l'utilisateur que vous souhaitez insérer ou mettre à jour
-    let userData:UsersWhereUniqueInput = {
-      email: 'example@example.com',
-      image: 'profile.jpg',
-      nom: 'John Doe',
-      password: 'motdepasse',
-      tasks: [
-        {
-          singleTask: 'Acheter du pain',
-          time: new Date(), // Remplacez par la date et l'heure appropriées
-        },
-        // Ajoutez d'autres tâches si nécessaire
-      ],
-    };
-    
-    // Utilisez l'opération upsert pour insérer ou mettre à jour l'utilisateur
-    const upsertedUser = await prisma.users.upsert({
-      where: { email: userData.email }, // Clé de recherche
-      update: userData, // Mises à jour en cas de correspondance
-      create: userData, // Création si aucune correspondance
-    });
-
-    console.log('Utilisateur inséré/mis à jour :', upsertedUser);
-  } catch (error) {
-    console.error('Erreur :', error);
-  } finally {
-    await prisma.$disconnect();
-  }
-}
-
-main();
+    await prisma.users.create({
+      data:{
+        email:"seniorDeveloper@gmail.com", // j'avais oublié d'implementer dans la boîte 
+        image:"78452295744.png",
+        nom:"makerty",
+        password:"478Pocaso",
+        tasks:[
+          {singleTask:"norman est mort je dois aller à son enterement", time:new Date()},{singleTask:"j'i perdu le reste je vais les chercehr", time:new Date()}
+        ]
+    }
+    })
+    const allCustomers = await prisma.users.findMany();
+    console.log(allCustomers);
+    console.log('Utilisateur inséré/mis à jour :');
+  } 
+  main()
+    .then(async () => {
+      await prisma.$disconnect()
+    })
+    .catch(async (e) => {
+      console.error(e)
+      await prisma.$disconnect()
+      process.exit(1)
+    })
+  main()
+  
