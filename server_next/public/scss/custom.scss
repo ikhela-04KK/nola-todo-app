@@ -1,0 +1,34 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+// Include any default variable overrides here (though functions won't be available)
+// $body-bg:#EAF0F9;
+
+@import 'https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap';
+
+
+
+$primary : #2E6391;
+@mixin blue-gradient(){
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,0.5187324929971988) 41%, rgba(234,240,249,1) 83%);
+}
+.ikh-bg-gradient{
+    @include blue-gradient();
+}
+@mixin blue-gradient(){
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, #ffffff84 50%, #eaf0f9 100%);
+}
+.ikh-blue-gradient{
+    @include blue-gradient();
+}
+$navbar-light-color:#DFDCED;
+$navbar-light-toggler-border-color: #DFDCED;
+$font-family-base:"space Grotesk";
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+// @import "../../node_modules/bootstrap/scss/bootstrap/mixins";
+
+// * try to create a component
+
+
+// Then add additional custom code heredze
