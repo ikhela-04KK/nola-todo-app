@@ -16,11 +16,22 @@ interface Users {
   tasks       :Object[]  ;
   // heure       :String ;
   // lenTask     :number;
+  remenberMe : Boolean;
 }
+
+// type for my signUp root 
+interface signUp{
+  email:string;
+  password:string;
+  rememberMe:boolean;
+}
+
+// type for my addTask root
+
 const prisma= new PrismaClient();
 async function run() {
-  const Users = await prisma.users.findMany();
-  console.log(Users)
+  const any_Users = await prisma.users.findMany();
+  console.log(any_Users)
   }; 
   run()
   .then(async () => {
@@ -62,40 +73,28 @@ app.post("/sign-in", (req: Request, res: Response) => {
   res.render("sign-up.ejs")
 });
 
-let userData: Users;
-let taskUsers: string[] = [];
+// let userData: Users;
+// let taskUsers: string[] = [];
 
-app.post("/sign-in/connected", upload.single('userImage'), (req: Request, res: Response) => {
-  
-  const email: string = req.body.email;
+// express.Request<{},{},signUp> signature de type gérique -> req, res, next 
+app.post("/sign-in/connected", upload.single('userImage'), async (req: express.Request<{},{},signUp> , res: Response) => {
+  try{
+  console.log(req.body);
+  const {email, password,rememberMe } = req.body
   const nom = email.split("@")[0];
   const image = `${req.file?.filename}`;
-  const password:string = `${req.body.password}`;
-  const RememberMe:boolean = JSON.parse(req.body.rememberMe)
-  // const lenTask = 10;
-  // dataUser 
-  const user01 = {email:email,nom:nom,image:image,password:password , RememberMe:RememberMe}
-  async function main(){
-    await prisma.users.create({
-      data:user01
-    })
+  const userData = await prisma.users.create({
+      data:{email:email,nom:nom,image:image,password:password , rememberMe:rememberMe}
+  })
+    res.json(userData);
+    res.render("features.ejs", userData);
+    await prisma.$disconnect()
   }
-  main()
-  .then(async () => {
-    await prisma.$disconnect()
-    res.status(200).sendStatus(200)
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
-  const userData = user01
-  console.log(userData);
-  res.render("features.ejs", userData);
-  
+  catch(e){
+    console.log(e);
+    await prisma.$disconnect();
+  }
 })
-
 
 // app.post("/sign-in/connected/add-task", upload.none(), (req: Request, res: Response) => {
 //   console.log(req.body);
