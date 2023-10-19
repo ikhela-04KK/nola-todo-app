@@ -36,21 +36,14 @@ function search(client) {
     });
 }
 search(client);
-//   add a new element 
-// array of bool 
-function randomBoolean() {
-    return Math.random() < 0.5;
-}
 function updateClient(client) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const cursor = yield client
                 .db("prisma-client")
                 .collection("Users")
-                .updateMany({}, { $set: { remmeberMe: () => {
-                        return Math.random() < 0.5;
-                    } } });
-            console.log(cursor.matchedCount);
+                .updateMany({ rememberMe: { $exists: false } }, { $set: { rememberMe: true } });
+            // console.log(cursor.matchedCount);
             console.log(cursor.modifiedCount);
         }
         catch (error) {

@@ -21,11 +21,7 @@ a.user-dropdown::after{
 a.ik-dropdown::after{
     display: none;
 }
-div.i-div{
-    /* width: 325px; */
-    /* align-items: center; */
-    /* height: 112px; */
-}
+
 button.i-btn{
     width: 290px;
     height: 112px;

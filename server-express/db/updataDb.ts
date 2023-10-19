@@ -32,7 +32,7 @@ async function updateClient (client:MongoClient){
         const cursor = await client 
             .db("prisma-client")
             .collection("Users")
-            .updateMany({rememberMe:{$exists:false}} ,{$set:{rememberMe:true}})
+            .updateMany({rememberMe:{$exists:true}} ,{$set:{rememberMe:'true'}})
         // console.log(cursor.matchedCount);
         console.log(cursor.modifiedCount);
     } catch (error) {

@@ -18,6 +18,7 @@ const path_1 = __importDefault(require("path"));
 // import "dotenv/config";
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
+// type for my addTask root
 const prisma = new client_1.PrismaClient();
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -62,38 +63,28 @@ app.get("/", (req, res) => {
 app.post("/sign-in", (req, res) => {
     res.render("sign-up.ejs");
 });
-let userData;
-let taskUsers = [];
-app.post("/sign-in/connected", upload.single('userImage'), (req, res) => {
+// let userData: Users;
+// let taskUsers: string[] = [];
+// express.Request<{},{},signUp> signature de type gérique -> req, res, next 
+app.post("/sign-in/connected", upload.single('userImage'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const email = req.body.email;
-    const nom = email.split("@")[0];
-    const image = `${(_a = req.file) === null || _a === void 0 ? void 0 : _a.filename}`;
-    const password = `${req.body.password}`;
-    const rememberMe = true;
-    // dataUser 
-    const user01 = { email: email, nom: nom, image: image, password: password, rememberMe: rememberMe };
-    function main() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield prisma.users.create({
-                data: user01
-            });
+    try {
+        console.log(req.body);
+        const { email, password, rememberMe } = req.body;
+        const nom = email.split("@")[0];
+        const image = `${(_a = req.file) === null || _a === void 0 ? void 0 : _a.filename}`;
+        const userData = yield prisma.users.create({
+            data: { email: email, nom: nom, image: image, password: password, rememberMe: rememberMe }
         });
+        res.json(userData);
+        res.render("features.ejs", userData);
+        yield prisma.$disconnect();
     }
-    main()
-        .then(() => __awaiter(void 0, void 0, void 0, function* () {
+    catch (e) {
+        console.log(e);
         yield prisma.$disconnect();
-        res.status(200).sendStatus(200);
-    }))
-        .catch((e) => __awaiter(void 0, void 0, void 0, function* () {
-        console.error(e);
-        yield prisma.$disconnect();
-        process.exit(1);
-    }));
-    const userData = user01;
-    console.log(userData);
-    res.render("features.ejs", userData);
-});
+    }
+}));
 // app.post("/sign-in/connected/add-task", upload.none(), (req: Request, res: Response) => {
 //   console.log(req.body);
 //   const date = new Date();

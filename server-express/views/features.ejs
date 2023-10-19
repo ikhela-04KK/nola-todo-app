@@ -41,7 +41,7 @@
           <a href="#" class="user-dropdown d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
             <!-- application du telechargeur  d'image  -->
-            <img alt="mdo" width="32" height="32" class="rounded-circle" src=<%=image%>
+            <img alt="mdo" width="32" height="32" class="rounded-circle" src= <%= image %>
 
           </a>
 
@@ -178,11 +178,11 @@
                   <h1 class="modal-title fs-5" id="exampleModalLabel">Entrer votre tâche</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="/sign-in/connected/add-task" enctype="multipart/form-data">
+                <form method="POST" action="/user/:id/tasks/add" enctype="multipart/form-data">
                   <div class="modal-body">
                       <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Task:</label>
-                        <input name="taskUser" type="text" class="form-control" id="recipient-name">
+                        <input name="task" type="text" class="form-control" id="recipient-name">
                       </div>
                   </div>
                   <div class="modal-footer">
