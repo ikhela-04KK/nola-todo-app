@@ -105,10 +105,8 @@ app.post("/sign-in/user", upload.single('image'), async (req: express.Request<{}
   const image = `/images/${req.file?.filename}`; // put the relatif path for the image
   const rememberMe = Boolean(req.body.rememberMe)
 
-  const userData = await prisma.users.upsert({
-      where :{email:email},
-      update:{},
-      create:{email:email,image:image,nom:nom,password:password , rememberMe:rememberMe},
+  const userData = await prisma.users.create({
+      data:{email:email,image:image,nom:nom,password:password , rememberMe:rememberMe},
   })
 
     // res.render("features.ejs", userData);
@@ -129,17 +127,19 @@ app.post("/sign-in/user", upload.single('image'), async (req: express.Request<{}
 //   res.redirect(`/user/${userName}/task`);
 // }); 
 
-app.get("/user/:id/task" , (req:Request, res:Response) =>{
+app.get("/user/:id/task" , async (req:Request, res:Response) =>{
   const idU =  req.params.id;
-  res.send(`Bienvenue, ${idU} !`);
+  console.log(idU);
+  // res.send(`Bienvenue, ${idU} !`);
 
   try {
-    const userData = prisma.users.findFirst({
+    const userData = await prisma.users.findFirst({
       where:{
         id:idU
       }
     })
     res.json(userData);
+    // console.log(userData);
   } catch (e) {
     console.log(e)
   }
