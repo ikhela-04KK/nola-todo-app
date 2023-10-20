@@ -143,6 +143,8 @@ app.get("/user/:id/tasks" , async (req:Request, res:Response) =>{
 })
 
 app.post("/user/:id/tasks/add", upload.none(), async (req: Request, res: Response) => {
+  const id = req.params.id;
+  console.log(id);
   // console.log(req.body);
 
     //strore my task
@@ -159,6 +161,7 @@ app.post("/user/:id/tasks/add", upload.none(), async (req: Request, res: Respons
 
 
   const {singleTask}  = req.body;
+  
   // let lenTask = storeTask.push({singleTask,time});
 
   // storesTask.nombreTask = lenTask;
@@ -166,11 +169,11 @@ app.post("/user/:id/tasks/add", upload.none(), async (req: Request, res: Respons
 
   const storeTask = await prisma.users.update({
     where: {
-      id: req.params.id,
+      id: id,
     },
     data: {
       tasks: {
-        push: [{singleTask, time}],
+        push: [{singleTask, time}]
       },
     },
   })
