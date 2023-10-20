@@ -1,10 +1,11 @@
+//@ts-ignore
 import express, { Request, Response} from "express";
 import multer from "multer";
 import path from "path";
 // import "dotenv/config";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
-import { ObjectId } from "mongodb";
+
 
 // type for my signUp ROOT 
 interface signUp{
@@ -15,8 +16,8 @@ interface signUp{
 
 // type for my addTask ROOT
 interface addTask{
-  heure : string; 
-  task: string;
+  singleTask: string;
+  time: string; 
   // nombreTask:number;
 }
 
@@ -37,15 +38,19 @@ interface Users {
   // heure       :String ;
   // lenTask     :number;
   remenberMe : boolean;
-}
+} 
+
+
 
 //strore my task
 // let userTask:addTask ;
-let taskUser: addTask;
-let storeTask:addTask[];
-
+// let taskUser: addTask;
+let storeTask: addTask[] = [];
 // store for the all task
-let storesTask:anyTask;
+let storesTask: anyTask = {
+  nombreTask: 0,
+  tasks: [],
+};
 
 
 const prisma= new PrismaClient();
@@ -84,6 +89,8 @@ const port: number = 3000;
 // initialisation des middlewares
 app.use(express.static("public"));
 app.use('/sign-in', express.static('public'));
+app.use('/user/:id/', express.static('public'));
+app.use('/user/:id/task', express.static('public'));
 app.use(cors());
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json());
@@ -110,7 +117,7 @@ app.post("/sign-in/user", upload.single('image'), async (req: express.Request<{}
   })
 
     // res.render("features.ejs", userData);
-    res.redirect(`/user/${userData.id}/task`,); // don't send a username directly 
+    res.redirect(`/user/${userData.id}/tasks`,); // don't send a username directly 
 
     // res.json(userData);
     await prisma.$disconnect()
@@ -127,57 +134,38 @@ app.post("/sign-in/user", upload.single('image'), async (req: express.Request<{}
 //   res.redirect(`/user/${userName}/task`);
 // }); 
 
-app.get("/user/:id/task" , async (req:Request, res:Response) =>{
+app.get("/user/:id/tasks" , async (req:Request, res:Response) =>{
   const idU =  req.params.id;
-  console.log(idU);
-  // res.send(`Bienvenue, ${idU} !`);
-
   try {
-    const userData = await prisma.users.findFirst({
+    const userData:any = await prisma.users.findUnique({
       where:{
         id:idU
       }
     })
-    res.json(userData);
-    // console.log(userData);
-  } catch (e) {
+    // res.json(userData);
+    res.render("features.ejs",userData); //@ts-ignore
+  } 
+  catch (e) {
     console.log(e)
   }
-  // const userData = prisma.users.findUnique({
-  //   where:{
-  //     id:idU
-  //   }
-  // })
-  // res.render("features.ejs", userData);
 })
 
-// app.post("/user/:id/tasks/add", upload.none(), (req: Request<{},{}, addTask>, res: Response) => {
-//   console.log(req.body);
+app.post("/user/:id/tasks/add", upload.none(), (req: Request<{},{}, addTask>, res: Response) => {
+  console.log(req.body);
 
-//   const date = new Date();
-//   const heureDate = `${date.getHours()}:${date.getMinutes()}`;
+  const date = new Date();
+  const time = `${date.getHours()}:${date.getMinutes()}`;
 
-//   const {task}  = req.body; 
+  const {singleTask}  = req.body;
+  let lenTask = storeTask.push({singleTask,time});
 
-//   taskUser.heure = heureDate;
-//   taskUser.task = task;
+  storesTask.nombreTask =lenTask;
+  storesTask.tasks = storeTask;
 
+  // res.redirect("/sign-in/connected");
+  res.json(storesTask)
+});
 
-//   // verification 
-//   console.log(typeof(task));
-
-//   // array of task for store all the user task
-//   let lenTask = storeTask.push(taskUser);
-
-//   // userTask.tasks= taskUsers;
-//   // userTask.lenTask = lenTask;
-//   storesTask.nombreTask =lenTask;
-//   storesTask.tasks = storeTask;
-
-//   console.log(storesTask);
-//   // res.redirect("/sign-in/connected");
-//   res.send(storesTask);
-// });
 // // app.get("/sign-in/connected", (req: Request, res: Response) => {
 // //   res.render("features.ejs", userData);
 // // });
