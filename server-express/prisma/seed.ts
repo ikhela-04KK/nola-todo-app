@@ -22,11 +22,21 @@ async function main() {
   //       rememberMe: true
   //   }
   // })
-    const allCustomers = await prisma.users.findUnique({
-      where:{id:"652fecbfd4ae2a1a173ec5cb"}}
-    );
-    console.log(allCustomers);
-    console.log('Utilisateur inséré/mis à jour :');
+    // const allCustomers = await prisma.users.findUnique({
+    //   where:{id:"652fecbfd4ae2a1a173ec5cb"}}
+    // );
+    // console.log(allCustomers);
+    // console.log('Utilisateur inséré/mis à jour :');
+
+    const addTask = await prisma.users.update({
+      where:{id:"65317ef0cf7995434a5f0396"}, 
+      data:{
+        tasks:{
+          push: [{singleTask:"paginer le coup du soir  ", time:new Date()}]
+        }
+      }
+    })
+    // console.log(addTask);
   } 
   main()
     .then(async () => {

@@ -42,7 +42,7 @@ function updateClient(client) {
             const cursor = yield client
                 .db("prisma-client")
                 .collection("Users")
-                .updateMany({ rememberMe: { $exists: false } }, { $set: { rememberMe: true } });
+                .updateMany({ rememberMe: { $exists: true } }, { $set: { rememberMe: 'true' } });
             // console.log(cursor.matchedCount);
             console.log(cursor.modifiedCount);
         }

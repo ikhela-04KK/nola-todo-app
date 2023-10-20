@@ -27,6 +27,10 @@ interface anyTask{
   nombreTask:number;
 } 
 
+interface idU{
+  readonly id:string;
+}
+
 // Une meilleur intégration de typscript dans ce projet tâche
 interface Users {
   readonly id :String;      
@@ -39,18 +43,6 @@ interface Users {
   // lenTask     :number;
   remenberMe : boolean;
 } 
-
-
-
-//strore my task
-// let userTask:addTask ;
-// let taskUser: addTask;
-let storeTask: addTask[] = [];
-// store for the all task
-let storesTask: anyTask = {
-  nombreTask: 0,
-  tasks: [],
-};
 
 
 const prisma= new PrismaClient();
@@ -150,25 +142,49 @@ app.get("/user/:id/tasks" , async (req:Request, res:Response) =>{
   }
 })
 
-app.post("/user/:id/tasks/add", upload.none(), (req: Request<{},{}, addTask>, res: Response) => {
-  console.log(req.body);
+app.post("/user/:id/tasks/add", upload.none(), async (req: Request, res: Response) => {
+  // console.log(req.body);
 
+    //strore my task
+  // let userTask:addTask ;
+  // let taskUser: addTask;
+
+  // store for the all task
+  let storesTask: anyTask = {
+    nombreTask: 0,
+    tasks: [],
+  };
   const date = new Date();
   const time = `${date.getHours()}:${date.getMinutes()}`;
 
-  const {singleTask}  = req.body;
-  let lenTask = storeTask.push({singleTask,time});
 
-  storesTask.nombreTask =lenTask;
-  storesTask.tasks = storeTask;
+  const {singleTask}  = req.body;
+  // let lenTask = storeTask.push({singleTask,time});
+
+  // storesTask.nombreTask = lenTask;
+  // storesTask.tasks = storeTask;
+
+  const storeTask = await prisma.users.update({
+    where: {
+      id: req.params.id,
+    },
+    data: {
+      tasks: {
+        push: [{singleTask, time}],
+      },
+    },
+  })
+
+
+
 
   // res.redirect("/sign-in/connected");
-  res.json(storesTask)
+  res.json(storeTask);
 });
 
-// // app.get("/sign-in/connected", (req: Request, res: Response) => {
-// //   res.render("features.ejs", userData);
-// // });
+// app.get("/user/:id/tasks", (req: Request, res: Response) => {
+//   res.render("features.ejs", userData);
+// });
 app.listen(port, () => {
   console.log(`Le serveur fonctionne sur le port ${port}`);
 });
