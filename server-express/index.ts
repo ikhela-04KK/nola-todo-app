@@ -5,7 +5,8 @@ import path from "path";
 // import "dotenv/config";
 import cors from "cors";
 import { PrismaClient } from "@prisma/client";
-
+// import api for username 
+import {USERS, createRandomUser} from "./api/fakerUser"
 
 // type for my signUp ROOT 
 interface signUp{
@@ -90,7 +91,9 @@ app.get("/", (req: Request, res: Response) => {
   res.render("index.ejs");
 });
 app.post("/sign-in", (req: Request, res: Response) => {
-  res.render("sign-up.ejs")
+  //  use this setup for implementing the way to send a fake data for testing 
+  const fake_user = createRandomUser()
+  res.render("sign-up.ejs", fake_user)
 });
 
 
@@ -127,7 +130,7 @@ app.post("/sign-in/user", upload.single('image'), async (req: express.Request<{}
 // }); 
 
 app.get("/user/:id/tasks" , async (req:Request, res:Response) =>{
-  const idU =  req.params.id;
+  const idU = req.params.id;
   try {
     const userData:any = await prisma.users.findUnique({
       where:{
@@ -157,7 +160,8 @@ app.post("/user/:id/tasks/add", upload.none(), async (req: Request, res: Respons
     tasks: [],
   };
   const date = new Date();
-  const time = `${date.getHours()}:${date.getMinutes()}`;
+  // const time = `${date.getHours()}:${date.getMinutes()}`;
+  const time = new Date();
 
 
   const {singleTask}  = req.body;

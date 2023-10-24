@@ -27,14 +27,14 @@
     <!-- <form action="/connected" method="POST" enctype="multipart/form-data"> -->
     <form action="/sign-in/user" method="POST" enctype="multipart/form-data">
         <div class="form-floating">
-            <input name ="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input name ="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="<%=email%>">
             <label for="floatingInput">Email address</label>
         </div>
 
 
         <div class="form-floating my-4">
             <input name="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
+            <label for="floatingPassword" value="<%=password>">Password</label>
         </div>
         <!-- implement the password strengh -->
         <div class="input-group mb-3">
