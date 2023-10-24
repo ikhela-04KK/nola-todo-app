@@ -157,7 +157,7 @@
               <label class="list-group-item d-flex gap-3">
               <input class="form-check-input flex-shrink-0" type="checkbox" value="" style="font-size: 1.375em;">
               <span class="pt-1 form-checked-content">
-                <strong> <%=task%> </strong>
+                <strong> <%=task %> </strong>
                 <small class="d-block text-body-secondary">
                   <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#alarm"></use></svg>
                   <%= heureDate %>pm
@@ -178,7 +178,7 @@
                   <h1 class="modal-title fs-5" id="exampleModalLabel">Entrer votre tâche</h1>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="/user/<%=id>/tasks/add" enctype="multipart/form-data">
+                <form method="POST" action="/user/<%=id%>/tasks/add" enctype="multipart/form-data">
                   <div class="modal-body">
                       <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Task:</label>

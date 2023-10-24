@@ -5,7 +5,7 @@ const nextConfig = {
             // Rewrites all API request to your Express server
             {
                 source: "https://9z8g5j-3000.csb.app/",
-                // destination: "................/:path*",
+                destination: "/",
 
             }
         ]
